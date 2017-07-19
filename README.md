@@ -90,4 +90,3 @@ CwisarDH+ has been implemented to participate in the SBM-RGBD Challenge @ RGBD20
 <RGBDvideo-folder>/temporalROI.txt    # one-line text file (<startidx> <endidx>) indicating frist and last frame index used for measurements
 
 ```
- work properly on input video data, CwisarDH+ assumes
