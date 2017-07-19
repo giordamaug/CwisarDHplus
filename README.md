@@ -77,6 +77,17 @@ To run the code the following libraries are required:
 ```
 $ cmake .
 $ make
-$ cwisardhplus  -P <RGBDvideo-filepathname>
+$ cwisardhplus  -P <RGBDvideo-folder>
 ```
 
+CwisarDH+ has been implemented to participate in the SBM-RGBD Challenge @ RGBD2017 (http://rgbd2017.na.icar.cnr.it/SBM-RGBDchallenge.html). As a prerequisite to use correctly this software you need to format your input RGBD video according to the format decided by the SBM-RGBD Challenge organizers. In more details, your <code><RGBDvideo-folder></code> must have the following structure/contents:
+
+```
+<RGBDvideo-folder>/depth              # folder for depth images of the video
+<RGBDvideo-folder>/groundtruth        # folder for groundtruth images for perfromance meausures
+<RGBDvideo-folder>/input              # folder for color images of the video
+<RGBDvideo-folder>/ROI.bmp            # bitmap Region-Of-Interest image 
+<RGBDvideo-folder>/temporalROI.txt    # one-line text file (<startidx> <endidx>) indicating frist and last frame index used for measurements
+
+```
+ work properly on input video data, CwisarDH+ assumes
