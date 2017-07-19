@@ -1,0 +1,17 @@
+cmake_minimum_required(VERSION 2.8)
+set( CMAKE_C_COMPILER /opt/local/bin/gcc-mp-5)
+set( CMAKE_CXX_COMPILER /opt/local/bin/g++-mp-5 )
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11" )
+
+project( cdwisardh )
+
+find_package( OpenCV REQUIRED )
+if( USE_OMP )
+find_package(OpenMP)
+if (OPENMP_FOUND)
+set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+endif()
+endif()
+add_executable( cdwisardh main.cpp wisard.cpp wnet_lib.cpp cv_util.cpp colorproc.cpp comparator.cpp )
+target_link_libraries( cdwisardh ${OpenCV_LIBS} )
