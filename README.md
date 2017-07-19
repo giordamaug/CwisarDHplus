@@ -1,5 +1,5 @@
-# BEWiS
-Background Estimation by Weightless Neural Networks
+# CwisarDH+
+Background detection in RGBD videos by weightless neural networks
 
 > Authors: Maurizio Giordano and Massimo De Gregorio
 > - Istituto di Calcolo e Reti ad Alte Prestazioni (ICAR) - Consiglio Nazionale delle Ricerche (CNR) (Italy)
@@ -9,10 +9,10 @@ Background Estimation by Weightless Neural Networks
 Description
 ----------------------
 
-BEWiS is a background modeling approach for videos based on a weightless neural system, 
-namely WiSARD<sup>rp</sup>, with the aim of exploiting its features of being highly adaptive and 
+CwisarDH+ is a background detection method for RGBD videos based on a weightless neural system, 
+namely WiSARD, with the aim of exploiting its features of being highly adaptive and 
 noise–tolerance at runtime.
-In BEWiS, the changing pixel colors in a video are processed by an incremental 
+In CwisarDH+, the changing pixel colors and depth in a RGBD video are processed by an incremental 
 learning neural network with a limited-in-time memory-retention mechanism that allow the
 proposed system to absorb small variations of the learned model (background) 
 in the steady state of operation as well as to  fastly adapt to background 
@@ -25,33 +25,30 @@ Citation Details
 This work is the subject of the article:
 
 M. De Gregorio, M. Giordano.
- "Background Estimation by Weightless Neural Networks".
- Submitted to "Pattern Recognition Letters - Special Issue on Scene Background Modeling and Initialization".
+ "CwisarDH+: background detection in RGBD videos based on learning of weightless neural networks".
+ Submitted to "Workshop on Background learning for detection and tracking from RGBD videos (in conjunction with ICIAP 2017)".
  
 At the current time, when using this source code please reference this work by citing the following
 paper which deals with a previous version of this software:
 
  M. De Gregorio, M. Giordano.
- Background Modeling by Weightless Neural Networks.
- In "New Trends in Image Analysis and Processing - ICIAP 2015 Workshops", 
- Volume 9281 of the series Lecture Notes in Computer Science, pp 493-501.
- Springer Verlag, http://dx.doi.org/10.1007/978-3-319-23222-5_60 
+ Change Detection with Weightless Neural Networks.
+ In "Proc. 2014 IEEE Conference on Computer Vision and Pattern Recognition Workshops", 
+ ISSN: 2160-7508, pp. 409-413, June 2014.
+ http://dx.doi.org/10.1109/CVPRW.2014.66 
  
 Bibtex:
 
 ```
-@Inbook{DeGregorio2015,
-    author="De Gregorio, Massimo and Giordano, Maurizio",
-    editor="Murino, Vittorio and Puppo, Enrico and Sona, Diego and Cristani, Marco and Sansone, Carlo"
-    title="Background Modeling by Weightless Neural Networks",
-    bookTitle="New Trends in Image Analysis and Processing -- ICIAP 2015 Workshops: ICIAP 2015 International Workshops, BioFor, CTMR, RHEUMA, ISCA, MADiMa, SBMI, and QoEM, Genoa, Italy, September 7-8, 2015, Proceedings",
-    year="2015",
-    publisher="Springer International Publishing",
-    address="Cham",
-    pages="493--501",
-    isbn="978-3-319-23222-5",
-    doi="10.1007/978-3-319-23222-5_60",
-    url="http://dx.doi.org/10.1007/978-3-319-23222-5_60"
+@INPROCEEDINGS{6910014, 
+  author={M. D. Gregorio and M. Giordano}, 
+  booktitle={2014 IEEE Conference on Computer Vision and Pattern Recognition Workshops}, 
+  title={Change Detection with Weightless Neural Networks}, 
+  year={2014}, 
+  pages={409-413}, 
+  doi={10.1109/CVPRW.2014.66}, 
+  ISSN={2160-7508}, 
+  month={June},
 }
 ```
 
@@ -66,7 +63,7 @@ either version 3 of the License or (at your option) any later version.
 A copy of the GPL license is provided in the "GPL.txt" file.
 
 ----------------------
-Compile/Run BEWiS source (Linux, Mac OSX)
+Compile/Run CwisarDH+ source (Linux, Mac OSX)
 ----------------------
 
 To run the code the following libraries are required:
@@ -80,19 +77,6 @@ To run the code the following libraries are required:
 ```
 $ cmake .
 $ make
-$ bewis  -i <video-filepathname>
+$ cwisardhplus  -P <RGBDvideo-filepathname>
 ```
-
-----------------------
-Create Docker Container to test BEWiS (Any system)
-----------------------
-
-Require docker 1.12.x or later (available at: https://docs.docker.com)
-
-```
-$ docker build -t bewis/pyopencv:latest .
-root@\<imagetag\>:/home/BEWiS# docker run -i -t bewis/pyopencv:latest /bin/bash
-root@\<imagetag\>:/home/BEWiS# ./bewis -i foliage.avi
-```
-
 
