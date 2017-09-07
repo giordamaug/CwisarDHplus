@@ -15,9 +15,7 @@
 using namespace std;
 using namespace cv;
 
-void cvShowManyImages(string title, int wait, int n_bit,  string colormode,  string partype, string framename, float threshold, string filtertype, string postfiltertype, long int wcnt, int status, int cachesize, int queuesize, unsigned int tp, unsigned int fp, unsigned int fn,  unsigned int tn, unsigned int nbShadowErrors, double recall, double precision, double specificity, double fmeasure, double fps, double mfps,
-    double timeG, double timeT, double timeC, double timeM, double timeO, double timeP, double histperc,
-    std::vector<cv::Mat> imglist) {
+void cvShowManyImages(string title, string framename, int ptr1, int ptr2, int wait, int status, unsigned int tp, unsigned int fp, unsigned int fn,  unsigned int tn, unsigned int nbShadowErrors, double recall, double precision, double specificity, double fmeasure, float fps, std::vector<cv::Mat> imglist) {
     
     int nArgs = imglist.size();
     // start point of text
@@ -33,13 +31,13 @@ void cvShowManyImages(string title, int wait, int n_bit,  string colormode,  str
     Scalar brown(117, 87, 16);
     
     // Text variables
-	double hscale = 1.0;
-	double vscale = 0.8;
-	double shear = 0.2;
-	int thickness = 1;
-	int line_type = 4;
+    double hscale = 1.0;
+    double vscale = 0.8;
+    double shear = 0.2;
+    int thickness = 1;
+    int line_type = 4;
     // set font
-	int fontface = CV_FONT_HERSHEY_PLAIN;
+    int fontface = CV_FONT_HERSHEY_PLAIN;
     
     int size;
     int off, base;
@@ -80,7 +78,7 @@ void cvShowManyImages(string title, int wait, int n_bit,  string colormode,  str
         w = 3; h = 1;
         size = 600;
     }
-    else if (nArgs == 3 || nArgs == 4) {
+    else if (nArgs == 4) {
         w = 2; h = 2;
         size = 300;
     }
@@ -96,14 +94,15 @@ void cvShowManyImages(string title, int wait, int n_bit,  string colormode,  str
         w = 4; h = 3;
         size = 150;
     }
+    size *= 2;
     
     // Create a new 3 channel image
-    Mat DispImage(60 + size*h, 100 + size*w, CV_8UC3, Scalar::all(180));
+    Mat DispImage(60 + size*h, 60 + size*w, CV_8UC3, Scalar::all(180));
     
     // Loop for nArgs number of arguments
     vector<Mat>::iterator iter = imglist.begin();
     vector<Mat>::iterator end = imglist.end();
-    for (i = 0, m = 20, n = 20; iter != end; iter++, i++, m += (20 + size)) {
+    for (i = 0, m = 20, n = 20; iter != end; iter++, i++, m += (5 + size)) {
         
         // Get the Pointer to the IplImage
         Mat img = *iter;
@@ -128,7 +127,7 @@ void cvShowManyImages(string title, int wait, int n_bit,  string colormode,  str
         // Used to Align the images
         if( i % w == 0 && m!= 20) {
             m = 20;
-            n+= 20 + size;
+            n+= (int)y/scale + 20;
         }
         
         // Set the image ROI to display the current image
@@ -143,38 +142,20 @@ void cvShowManyImages(string title, int wait, int n_bit,  string colormode,  str
     }
     
     // put text
+    int skip = 70;
     base = 20;
-    off = (int)( y/scale ) + 50;
+    off = (int)y*h/scale + skip;
     pt1 = Point(base,off);
     sprintf(text, "VIDEO INFO:");
     putText(DispImage,text,pt1,fontface,1.0,darkgreen);
     off +=20;
     pt1 = Point(base,off);
-    sprintf(text, "Display Scale: %f", 1/scale);
-    putText(DispImage,text,pt1,fontface,1.0,darkgreen);
-    off +=15;
-    pt1 = Point(base,off);
     sprintf(text, "Frame: %s", framename.c_str());
     putText(DispImage,text,pt1,fontface,1.0,darkgreen);
-    off +=15;
+    off +=20;
     pt1 = Point(base,off);
-    sprintf(text, "Image Size: %dx%d", x,y);
+    sprintf(text, "Temp ROI: %d-%d", ptr1, ptr2);
     putText(DispImage,text,pt1,fontface,1.0,darkgreen);
-    off +=15;
-    pt1 = Point(base,off);
-    sprintf(text, "Pre Filter: %s", filtertype.c_str());
-    putText(DispImage,text,pt1,fontface,1.0,darkgreen);
-    off +=15;
-    pt1 = Point(base,off);
-    sprintf(text, "Post Filter: %s", postfiltertype.c_str());
-    putText(DispImage,text,pt1,fontface,1.0,darkgreen);
-    
-    // second column wisard status
-    base = 350;
-    off = (int)( y/scale ) + 50;
-    pt1 = Point(base,off);
-    sprintf(text, "WISARD STATUS:", tp);
-    putText(DispImage,text,pt1,fontface,1.0,darkred);
     off +=20;
     pt1 = Point(base,off);
     if (status == 0) {
@@ -187,120 +168,55 @@ void cvShowManyImages(string title, int wait, int n_bit,  string colormode,  str
         sprintf(text, "Classifying", status);
         putText(DispImage,text,pt1,fontface,1.0,green);
     }
-    off +=15;
-    pt1 = Point(base,off);
-    sprintf(text, "N. Bits: %d", n_bit);
-    putText(DispImage,text,pt1,fontface,1.0,darkred);
-    off +=15;
-    pt1 = Point(base,off);
-    sprintf(text, "Thresholds: %.2f", threshold);
-    putText(DispImage,text,pt1,fontface,1.0,darkred);
-    off +=15;
-    pt1 = Point(base,off);
-    sprintf(text, "Color mode: %s", colormode.c_str());
-    putText(DispImage,text,pt1,fontface,1.0,darkred);
-    off +=15;
-    pt1 = Point(base,off);
-    sprintf(text, "Concurrency: %s", partype.c_str());
-    putText(DispImage,text,pt1,fontface,1.0,darkred);
-    off +=15;
-    pt1 = Point(base,off);
-    sprintf(text, "Cache Size: %d", cachesize);
-    putText(DispImage,text,pt1,fontface,1.0,darkred);
-    off +=15;
-    pt1 = Point(base,off);
-    sprintf(text, "History Size: %d", queuesize);
-    putText(DispImage,text,pt1,fontface,1.0,darkred);
-    
-    // third column (Stats)
-    base = 650;
-    off = (int)( y/scale ) + 50;
-    pt1 = Point(base,off);
-    sprintf(text, "TIMING:", tp);
-    putText(DispImage,text,pt1,fontface,1.0,blue);
     off +=20;
     pt1 = Point(base,off);
-    sprintf(text, "GRAPHICS = %2.2f %%", timeG);
-    putText(DispImage,text,pt1,fontface,1.0,blue);
-    off +=15;
-    pt1 = Point(base,off);
-    sprintf(text, "TRAIN = %2.2f %%", timeT);
-    putText(DispImage,text,pt1,fontface,1.0,blue);
-    off +=15;
-    pt1 = Point(base,off);
-    sprintf(text, "CLASSIFY = %2.2f %%", timeC);
-    putText(DispImage,text,pt1,fontface,1.0,blue);
-    off +=15;
-    pt1 = Point(base,off);
-    sprintf(text, "MKTUPLE = %2.2f %%", timeM);
-    putText(DispImage,text,pt1,fontface,1.0,blue);
-    off +=15;
-    pt1 = Point(base,off);
-    sprintf(text, "OUTPUT = %2.2f %%", timeO);
-    putText(DispImage,text,pt1,fontface,1.0,blue);
-    off +=15;
-    pt1 = Point(base,off);
-    sprintf(text, "FILTER = %2.2f %%", timeP);
-    putText(DispImage,text,pt1,fontface,1.0,blue);
-    off +=15;
-    pt1 = Point(base,off);
-    sprintf(text, "Wnet Size: %d K", (int)wcnt >> 10);
-    putText(DispImage,text,pt1,fontface,1.0,blue);
-    off +=15;
-    pt1 = Point(base,off);
-    sprintf(text, "FPS (Mean) = %.2f (%.2f)", fps, mfps);
-    putText(DispImage,text,pt1,fontface,1.0,blue);
-    off +=15;
-    pt1 = Point(base,off);
-    sprintf(text, "Cache Hits = %2.2f %%", histperc);
-    putText(DispImage,text,pt1,fontface,1.0,blue);
+    sprintf(text, "FPS = %.2f", fps);
+    putText(DispImage,text,pt1,fontface,1.0,darkgreen);
     
-    // third column (Stats)
-    base = 1000;
-    off = (int)( y/scale ) + 50;
+    // fourth column (Stats)
+    base = 300;
+    off = (int)( y*h/scale ) + skip;
     pt1 = Point(base,off);
     sprintf(text, "METRICS:", tp);
-    putText(DispImage,text,pt1,fontface,1.0,brown);
+    putText(DispImage,text,pt1,fontface,1.0,blue);
     off +=20;
     pt1 = Point(base,off);
     sprintf(text, "TP = %d", tp);
-    putText(DispImage,text,pt1,fontface,1.0,brown);
+    putText(DispImage,text,pt1,fontface,1.0,blue);
     off +=15;
     pt1 = Point(base,off);
     sprintf(text, "FP = %d", fp);
-    putText(DispImage,text,pt1,fontface,1.0,brown);
+    putText(DispImage,text,pt1,fontface,1.0,blue);
     off +=15;
     pt1 = Point(base,off);
     sprintf(text, "FN = %d", fn);
-    putText(DispImage,text,pt1,fontface,1.0,brown);
+    putText(DispImage,text,pt1,fontface,1.0,blue);
     off +=15;
     pt1 = Point(base,off);
     sprintf(text, "TN = %d", tn);
-    putText(DispImage,text,pt1,fontface,1.0,brown);
+    putText(DispImage,text,pt1,fontface,1.0,blue);
     off +=15;
     pt1 = Point(base,off);
     sprintf(text, "SE = %d", nbShadowErrors);
-    putText(DispImage,text,pt1,fontface,1.0,brown);
+    putText(DispImage,text,pt1,fontface,1.0,blue);
     off +=15;
     pt1 = Point(base,off);
     sprintf(text, "Recall   = %1.4f", recall);
-    putText(DispImage,text,pt1,fontface,1.0,brown);
+    putText(DispImage,text,pt1,fontface,1.0,blue);
     off +=15;
     pt1 = Point(base,off);
     sprintf(text, "Precisio = %1.4f", precision);
-    putText(DispImage,text,pt1,fontface,1.0,brown);
+    putText(DispImage,text,pt1,fontface,1.0,blue);
     off +=15;
     pt1 = Point(base,off);
     sprintf(text, "Specific = %1.4f", specificity);
-    putText(DispImage,text,pt1,fontface,1.0,brown);
+    putText(DispImage,text,pt1,fontface,1.0,blue);
     off +=15;
     pt1 = Point(base,off);
     sprintf(text, "Fmeasure = %1.4f", fmeasure);
-    putText(DispImage,text,pt1,fontface,1.0,brown);
-    
+    putText(DispImage,text,pt1,fontface,1.0,blue);
     // Create a new window, and show the Single Big Image
     imshow( title, DispImage);
-    
     cvWaitKey(wait);
     
 }
