@@ -433,7 +433,7 @@ int main(int argc,char **argv) {
     } else if (comp == "OR") {
         combine = &bitwise_or;
     }
-    if (pretrainend == 1) { pretrainend += 5; queuesize=50; queuesizeD=50; }
+    if (pretrainend == 1) { pretrainend += 5; queuesize=10; queuesizeD=10; }
     //else {queuesize=pretrainend-1; queuesizeD=pretrainend-1;}
 
     // set random seed
