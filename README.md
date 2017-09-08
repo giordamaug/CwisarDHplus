@@ -26,7 +26,7 @@ This work is the subject of the article:
 
 M. De Gregorio, M. Giordano.
  "CwisarDH+: background detection in RGBD videos based on learning of weightless neural networks".
- Submitted to "Workshop on Background learning for detection and tracking from RGBD videos (in conjunction with ICIAP 2017)".
+ In press in "Proc. of Workshop on Background learning for detection and tracking from RGBD videos (in conjunction with ICIAP 2017)".
  
 At the current time, when using this source code please reference this work by citing the following
 paper which deals with a previous version of this software:
