@@ -42,7 +42,7 @@ int status = 0;
 char ch;
 
 // Window title
-string title = "CwisarD - Change Detection WiSARD";
+string title = "CwisarDH+ - Change Detection by WiSARD";
 
 // Stats definitions
 unsigned int tp, fp, fn, tn, nbShadowErrors;
@@ -214,15 +214,15 @@ int main(int argc,char **argv) {
 			cout << "    -S|--stats <int>:<int>\t\t: compute TP, FP, TN, FN from_frame:to_frame" << endl;
 			cout << "    -m|--cachesize <size>\t\t: chache size [10]" << endl;
 			cout << "    -k|--histosize <size>:<size>\t\t: history size [30:30]" << endl;
-            cout << "    -o|--operator <AND|OR>\t\t: image combine operator [30:30]" << endl;
+            cout << "    -o|--operator <AND|OR>\t\t: image combine operator [OR]" << endl;
             cout << "    -r|--nornd\t\t: same seed [enabled]" << endl;
 			cout << "    -B|--blur <width>:<heigth>\t\t: image blur parameters [3:3]" << endl;
 			cout << "    -O|--postfilter <et>:<es>:<dt><ds>\t\t\t: enable postprocessing erosion-dilation [disabled]" << endl;
 			cout << "    -D|--dump <dirpath>\t\t\t: dump bg images in dirpath" << endl;
 			cout << "    -q|--dumprange <fromFrame>:<toFrame>: range of frames to dump [startframe:endframe]" << endl;
-			cout << "    -b|--bits <nbits>:<nbits>\t\t\t: number of bits (positive inteneger upto 32) [8:8]" << endl;
-			cout << "    -z|--ntics <nt>:<nt>]\t\t: set RGB color scale (<nt> in [1:255]) [128:128]" << endl;
-			cout << "    -t|--threshold <thr>\t\t: pixel classification threshold (real number in [0.0:1.0]) [0.75]" << endl;
+			cout << "    -b|--bits <nbits>:<nbits>\t\t\t: number of bits for RGB and Depth (positive integer upto 32) [8:8]" << endl;
+			cout << "    -z|--ntics <nt>:<nt>]\t\t: set RGB and Depth color scale (<nt> in [1:255]) [128:128]" << endl;
+			cout << "    -t|--threshold <thr>\t\t: pixel classification thresholds for RGB and Depth (real number in [0.0:1.0]) [0.75]" << endl;
 			cout << "    -p|--pretrain <from>:<to>\t: pretrain interval (<positive-int>:<positive-int>) [1:100]" << endl;
 			exit(-1);
             break;
